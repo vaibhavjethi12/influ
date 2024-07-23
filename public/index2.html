@@ -1,0 +1,519 @@
+<html>
+
+<head>
+    <title>
+        index page
+    </title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+    <script>
+        $(document).ready(function () {
+            $("#btnsign").click(function () { //ualert();
+                let obj = {
+                    type: "get",
+                    url: "/signup-process",
+                    data: {
+                        signem: $("#signem").val(),
+                        signp: $("#signp").val(),
+                        combo: $("#combo").val()
+
+                    }
+
+                }
+                $.ajax(obj).done(function (resp) {
+                    
+                    var pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+                    let email = $("#signem").val();
+                    alert(resp);
+
+                    if (pattern.test(email) == true) {
+                        //  alert(resp);
+                        alert(resp);
+                        
+                    }
+
+                }).fail(function (err) {
+                    alert(err.statusText);
+                })
+            })
+            $("#btnlogin").click(function () {
+                let obj = {
+                    type: "get",
+                    url: "/login-process",
+                    data: {
+                        loginem: $("#loginem").val(),
+                        loginp: $("#loginp").val(),
+
+
+                    }
+
+                }
+
+                $.ajax(obj).done(function (resp) {
+                    //alert("hi");
+                    var pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+                    let email = $("#loginem").val();
+
+                    if (pattern.test(email) == true) {
+                        alert(resp);
+                        if (resp === "influencer") {
+                            location.href = "influ-dash.html";
+                            localStorage.setItem("activeuser", $("#loginem").val());
+
+                        }
+
+                        else if (resp === "client") {
+                            location.href = "client-dash.html";
+                            localStorage.setItem("activeuserc", $("#loginem").val());
+
+                        }
+                    }
+
+
+
+
+                }).fail(function (err) {
+                    alert(err.statusText);
+                })
+            })
+            //
+            $("#btnpass").click(function () {
+                //alert("hi pass")
+                let obj = {
+                    type: "get",
+                    url: "/send-pass",
+                    data: {
+                        loginem: $("#loginem").val(),
+
+                    }
+
+                }
+                $.ajax(obj).done(function (resp) {
+                    alert(resp);
+                })
+
+            })
+
+            $("#signp").keydown(function () {
+                let patt = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/;
+                let pwd = $(this).val();
+                if (patt.test(pwd) == true) {
+                    $("#errPwd").html("valid");
+                }
+                else {
+                    $("#errPwd").html("invalid");
+                }
+            })
+            $("#eye").mousedown(function () {
+                $("#signp").prop("type", "text");
+                $("#eye").removeClass("fa-eye").addClass("fa-eye-slash");
+
+            })
+            $("#eye").mouseup(function () {
+                $("#signp").prop("type", "password");
+                $("#eye").addClass("fa-eye").removeClass("fa-eye-slash");
+
+            })
+
+            $("#loginp").keydown(function () {
+                let patt = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/;
+                let pwd = $(this).val();
+                if (patt.test(pwd) == true) {
+                    $("#errpwd").html("valid");
+                }
+                else {
+                    $("#errpwd").html("invalid");
+                }
+            })
+            $("#leye").mousedown(function () {
+                $("#loginp").prop("type", "text");
+                $("#leye").removeClass("fa-eye").addClass("fa-eye-slash");
+
+            })
+            $("#leye").mouseup(function () {
+                $("#loginp").prop("type", "password");
+                $("#leye").addClass("fa-eye").removeClass("fa-eye-slash");
+
+            })
+            $("#btnopen").click(function () {
+                let obj = {
+                    type: "get",
+                    url: "/admin-open",
+                    data: {
+                        adminpass: $("#adminpass").val()
+
+
+
+                    }
+
+                }
+                $.ajax(obj).done(function (res) {
+                    alert(res);
+                    if (res === "Correct pass") {
+                        location.href = "admin-dash.html"
+                    }
+                })
+            })
+
+
+        })
+
+
+
+
+    </script>
+</head>
+
+<body style="background-color: lightgrey;">
+    <form>
+
+
+
+        <!---->
+        <nav style="background-color: #2874f0;" class="navbar navbar-expand-lg ">
+            <div class="container-fluid">
+
+                <img src="pics/logoweb.png" style="background-size: contain;width:50px;height:50px">
+                <a style="color:white" class="navbar-brand" href="#">Promo.com</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a style="color:white" href="/index2.html" class="nav-link">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <input style="color:white" class="btn btn-outline-secondary" type="button"
+                                data-bs-target="#staticBackdrop" data-bs-toggle="modal" class="nav-link active"
+                                aria-current="page" value="Signup">
+                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdrop"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">SIGNUP HERE</h1>
+                                            <span id="msgsign">*</span>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Email address</label><span
+                                                        id="errem">*</span>
+                                                    <input type="email" class="form-control" id="signem"
+                                                        aria-describedby="emailHelp">
+                                                    <div id="emailHelp" class="form-text">We'll never share your
+                                                        email with anyone else.
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Password</label> <span
+                                                        style="margin-left:20px" id="errPwd">*</span><i
+                                                        style="font-size: 20px;margin-left:20px" id="eye"
+                                                        class="fa-solid fa-eye fa-bounce"></i>
+                                                    <input type="password" class="form-control" id="signp">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <select class="form-select" id="combo">
+                                                        <option value="select">select category</option>
+                                                        <option value="client">Client</option>
+                                                        <option value="influencer">influencer</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <center><button type="submit" class="btn btn-primary"
+                                                            id="btnsign">Signup</button>
+                                                    </center>
+                                                </div>
+
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <!--login button-->
+                        <li class="nav-item">
+                            <input style="color:white" class="btn btn-outline-secondary" type="button" value="Login"
+                                class="nav-link" aria-current="page" data-bs-target="#staticBackdropl"
+                                data-bs-toggle="modal">
+                            <div class="modal fade" id="staticBackdropl" data-bs-backdrop="static"
+                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropl"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">LOGIN</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Email address</label>
+                                                    <input type="email" class="form-control" name="loginem" id="loginem"
+                                                        aria-describedby="emailHelp">
+                                                    <div id="emailHelp" class="form-text">We'll never share your
+                                                        email with anyone else.
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Password</label><span
+                                                        style="margin-left:20px" id="errpwd">*</span><i
+                                                        style="font-size: 20px;margin-left:20px" id="leye"
+                                                        class="fa-solid fa-eye fa-bounce"></i>
+                                                    <input type="password" class="form-control" id="loginp">
+                                                </div>
+                                                <center>
+                                                    <button type="submit" class="btn btn-primary"
+                                                        id="btnlogin">Login</button>
+                                                    <button type="button" id="btnpass" class="btn btn-link">Forget
+                                                        password?</button>
+                                                </center>
+                                            </form>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a style="color:white" href="#ourserv" class="nav-link">Our
+                                Services</a>
+
+                        </li>
+                        <li class="nav-item">
+                            <a style="color:white" class="nav-link " href="#ourteam">Our Team</a>
+                        </li>
+                        <li class="nav-item">
+                            <a style="color:white" class="nav-link" href="#reach">Reach
+                                Us</a>
+
+                        </li>
+
+
+
+                    </ul>
+                    <form class="d-flex">
+                        <input style="color:white" type="button" value="Admin Dashboard" class="nav-link"
+                            aria-current="page" data-bs-target="#staticBackdropa" data-bs-toggle="modal">
+                        <div class="modal fade" id="staticBackdropa" data-bs-backdrop="static" data-bs-keyboard="false"
+                            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Passkey for Admin-dash
+                                        </h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <label class="form-label">Password</label>
+                                            <input type="password" class="form-control" name="adminpass" id="adminpass">
+                                            <center>
+                                                <button type="button" style="margin-top:10px" class="btn btn-primary"
+                                                    id="btnopen">Open</button>
+                                            </center>
+                                        </form>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </nav>
+
+
+
+        <!--carousel-->
+        <div class="row" >
+
+            <div class="col-md-12 ">
+                <div style="height:300px" id="carouselExampleAutoplaying" class="carousel slide"
+                    data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="pics/mainpagecard.png" style="background-size: contain; height:650px"
+                                class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="pics/main5.png" style="background-size: contain;height:650px"
+                                class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="pics/mainpage card.png" style="background-size: contain;height:650px" class="d-block w-100"
+                                alt="...">
+                        </div> 
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+        <div class="row" style="margin-top:350px ;">
+            <div class="col">
+            <div id="ourserv" style="background-color: #2874f0;font-size:35px;color:white" class="col-md-12">
+                <center>
+                    Our Services
+                </center>
+
+            </div>
+        </div>
+        </div>
+
+        <!-- <div class="col-md-10 offset-md-1"> -->
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card">
+                        <img src="pics/collaboration.png" style="background-size: contain;" class="card-img-top"
+                            alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title"><b>Collaboration</b></h5>
+                            <p class="card-text">We believe that the best solutions come from collaboration. We are
+                                always eager to work with like-minded organizations, innovators, and creators to bring
+                                cutting-edge ideas to life.</p>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <img src="pics/find inf.png" style="background-size: contain;" class="card-img-top" alt="...">
+                        <div class="card-body">
+
+                            <h5 class="card-title">Find Influencer</h5>
+                            <p class="card-text">Are you an influencer passionate about [Your Industry/Niche]? We're
+                                looking for dynamic and creative individuals to join our influencer network and help us
+                                share our story with the world.</p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <img src="pics/promotion 3.png" style="background-size: contain;" class="card-img-top"
+                            alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Promotion</h5>
+                            <p class="card-text">we believe in providing our customers with the best value. Explore our
+                                exclusive promotions and take advantage of amazing deals on our top-quality products and
+                                services.</p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <img src="pics/meet and greet 3.png" style="background-size: contain;" class="card-img-top"
+                            alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Meet and Greet</h5>
+                            <p class="card-text">We are excited to invite you to an exclusive meet and greet event! This
+                                is a unique opportunity to connect with the brilliant minds behind , explore our latest
+                                innovations, and engage with fellow enthusiasts.</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- </div  > -->
+        <div id="ourteam" style="background-color: #2874f0;font-size:35px;color:white" class="col-md-12">
+            <center>
+                Our Team
+            </center>
+
+        </div>
+        <div class="col-md-10 offset-md-1">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="pics/RB.png" class="img-fluid rounded-start" alt="...">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title"><br><br>Under the Guidance of
+                                        <b>Rajesh Bansal</b>
+                                    </h5>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="pics/profilemine.png" style="height:200px" class="img-fluid rounded-start"
+                                    alt="...">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title"><br><br>Developed By <b>Vaibhav Jethi</b></h5>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="reach" style="background-color: #2874f0;font-size:35px;color:white" class="col-md-12">
+            <center>
+                Reach Us
+            </center>
+
+        </div>
+        <div class="col-md-12">
+            <center>
+
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3447.8807340362628!2d74.94975317535173!3d30.21195127483967!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391732a4f07278a9%3A0x4a0d6293513f98ce!2sBanglore%20Computer%20Education!5e0!3m2!1sen!2sin!4v1721106499866!5m2!1sen!2sin"
+                    width="1400" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </center>
+        </div>
+        <div style="background-color: #2874f0;font-size:20px;color:white" class="col-md-12">
+            <center>
+                Copyright@bce
+
+            </center>
+        </div>
+
+
+    </form>
+</body>
+
+</html>

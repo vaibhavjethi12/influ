@@ -1,0 +1,202 @@
+<html>
+
+<head>
+    <title>project</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $("#btnsign").click(function () { //alert();
+                let obj = {
+                    type: "get",
+                    url: "/signup-process",
+                    data: {
+                        signem: $("#signem").val(),
+                        signp: $("#signp").val(),
+                        combo: $("#combo").val()
+
+                    }
+
+                }
+                $.ajax(obj).done(function (resp) {
+                    alert(resp);
+                    
+                }).fail(function (err) {
+                    alert(err.statusText);
+                })
+            })
+            $("#btnlogin").click(function(){
+                let obj = {
+                    type: "get",
+                    url: "/login-process",
+                    data: {
+                        loginem: $("#loginem").val(),
+                        loginp: $("#loginp").val(),
+                        
+
+                    }
+
+                }
+                $.ajax(obj).done(function (resp) {
+                    //alert("hi");
+                    alert(resp);
+                    if(resp==="influencer")
+                {
+                    location.href="influ-dash.html";
+                    localStorage.setItem("activeuser", $("#loginem").val());
+
+                }
+                    
+                else 
+                {
+                    location.href="influ-finder.html";
+
+                }
+                
+            
+            
+                }).fail(function (err) {
+                    alert(err.statusText);
+                })
+               
+            })
+            $("#btnpass").click(function()
+        {
+            //alert("hi pass")
+            let obj = {
+                    type: "get",
+                    url: "/send-pass",
+                    data: {
+                        loginem: $("#loginem").val(),
+                        
+
+                    }
+
+                }
+                $.ajax(obj).done(function(resp)
+            {
+                alert(resp);
+            })
+
+        })
+        })
+    </script>
+
+</head>
+
+<body>
+    <form>
+
+        <p>
+        <div style=" margin-left:620px; float:left">
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop">Signup</button>
+
+        </div>
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdrop" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">SIGNUP HERE</h1>
+                        <span id="msgsign">*</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="signem" aria-describedby="emailHelp">
+                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Password</label>
+                                <input type="password" class="form-control" id="signp">
+                            </div>
+                            <div class="mb-3">
+                                <select class="form-select" id="combo">
+                                    <option value="select">select category</option>
+                                    <option value="client">Client</option>
+                                    <option value="influencer">influencer</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <center><button type="submit" class="btn btn-primary" id="btnsign">Signup</button>
+                                </center>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- modal login-->
+        <div style="margin-left:40px;float:left">
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                data-bs-target="#staticBackdropl">Login</button>
+        </div>
+        <div class="modal fade" id="staticBackdropl" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropl" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">LOGIN</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label class="form-label">Email address</label>
+                                <input type="email" class="form-control" name="loginem"id="loginem" aria-describedby="emailHelp">
+                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Password</label>
+                                <input type="password" class="form-control" id="loginp">
+                            </div>
+                            <center>
+                                <button type="submit" class="btn btn-primary" id="btnlogin">Login</button>
+                                <button type="button" id="btnpass"class="btn btn-link">Forget password?</button>
+                            </center>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <form>
+        <div style="margin-left:40px;float:left">
+            <button type="submit" class="btn btn-outline-primary" formaction="/influ-dash" >influencer-dash</button>
+
+        </div>
+        <div style="margin-left:40px;float:left">
+            <button type="submit" class="btn btn-outline-primary" formaction="/admin-dash" >Admin-dash</button>
+
+        </div>
+        <div style="margin-left:40px;float:left">
+            <button type="submit" class="btn btn-outline-primary" formaction="/influ-finder" >Influencer-Find</button>
+
+        </div>
+
+    </form>
+        
+
+
+
+
+        </p>
+
+    </form>
+</body>
+
+</html>
