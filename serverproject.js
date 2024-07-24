@@ -35,7 +35,7 @@ mysql.connect(function (err) {
 })
 
 
-
+// adgag
 app.get("/", function (req, resp) {
     let path = __dirname + "/public/index2.html";
     resp.sendFile(path);
