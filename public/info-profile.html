@@ -24,6 +24,14 @@
   </script>
   <script>
     $(document).ready(function () {
+      function convertToLocalDateString(date) {
+        const localDate = new Date(date);
+        const year = localDate.getFullYear();
+        const month = String(localDate.getMonth() + 1).padStart(2, '0');
+        const day = String(localDate.getDate()).padStart(2, '0');
+
+        return `${year}-${month}-${day}`;
+      };
       let active = localStorage.getItem("activeuser");
       $("#Email").val(active).prop("readonly", true);
       $(document).ajaxStart(function () {
@@ -49,13 +57,16 @@
           if(jsonary.length>=1)
         {
           $("#btnsave").css("display","none");
-        
+          const date = jsonary[0].dob;  // Current date and time
+          const localDateString = convertToLocalDateString(date);
           //alert(jsonary[0].picpath);
           $("#name").val(jsonary[0].iname);
-          $("#prev").prop("src", "upload/" + jsonary[0].picpath);
+          $("#prev").prop("src", jsonary[0].picpath);
           $("#gender").val(jsonary[0].gender);
+          //alert(jsonary[0].dob);
           $("#Address").val(jsonary[0].address);
-          $("#dob").val(jsonary[0].dob);
+          // $("#dob").val(jsonary[0].dob.split("T")[0]);
+          $("#dob").val(localDateString);
           $("#city").val(jsonary[0].city);
           $("#cont").val(jsonary[0].contact);
           $("#field").val(jsonary[0].field.split(","));
@@ -153,7 +164,7 @@
       </div>
       <div class="col-md-4">
         <label style="color:Blue"for="ppic" class="form-label">Profile pic:</label>
-        <input type="file" id="ppic" name="ppic" onchange="doPrev(this,prev)" required>
+        <input type="file" id="ppic" name="ppic" onchange="doPrev(this,prev)" >
         <br>
         <img src="" id="prev" alt="" width="100" height="100">
 
