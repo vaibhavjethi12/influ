@@ -139,7 +139,7 @@ app.post("/profile-update",async  function (req, resp) {
         filename = req.body.hdn;
     }
 
-    mysql.query("update iprofile set iname=?,gender=?,picpath=?,dob=?,address=?,city=?,contact=?,field=?,insta=?,fb=?,youtube=?,others=? where email=?", [req.body.name, req.body.gender, filename, req.body.dob, req.body.Address, req.body.city, req.body.cont, req.body.field, req.body.insta, req.body.fb, req.body.youtube, req.body.other, req.body.Email], function (err,result) {
+    mysql.query("update iprofile set iname=?,gender=?,picpath=?,dob=?,address=?,city=?,contact=?,field=?,insta=?,fb=?,youtube=?,others=? where email=?", [req.body.name, req.body.gender, filename, req.body.dob, req.body.Address, req.body.city, req.body.cont, req.body.field.toString(), req.body.insta, req.body.fb, req.body.youtube, req.body.other, req.body.Email], function (err,result) {
         if (err == null) {
             if (result.affectedRows >= 1)
                 resp.redirect("result.html");
